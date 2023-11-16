@@ -1,0 +1,41 @@
+name: Terraform CICD Pipeline for Deploying AWS Resources
+run-name: ${{ github.actor }}
+
+on:
+  push:
+    branches:
+      - 'main'
+
+# To setup access
+# Go to github repository settings, Secrets and variables, actions.
+# New repository secret, give it the name AWS_ACCESS_KEY, then paste the access key.
+# New repository secret, give it the name AWS_SECRET_ACCESS_KEY, then paste the secret key.
+env:
+  AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+jobs:
+  build-infra:
+    name: terraform-cicd
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup terraform
+        uses: hashicorp/setup-terraform@v2
+      - name: Terraform init
+        id: init
+        run: terraform init
+        working-directory: ./
+      - name: Terraform validate
+        id: validate
+        run: terraform validate
+        working-directory: ./
+      - name: Terraform plan
+        id: plan
+        run: terraform plan
+        working-directory: ./
+      - name: Terraform apply
+        id: apply
+        run: terraform apply --auto-approve
+        working-directory: ./
