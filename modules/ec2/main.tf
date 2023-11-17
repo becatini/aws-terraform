@@ -13,6 +13,7 @@ resource "aws_instance" "web" {
     sudo yum update -y
     sudo yum install -y httpd
     sudo yum install -y git
+    sudo yum install -y telnet
     export META_INST_ID=`curl http://169.254.169.254/latest/meta-data/instance-id`
     export META_INST_TYPE=`curl http://169.254.169.254/latest/meta-data/instance-type`
     export META_INST_AZ=`curl http://169.254.169.254/latest/meta-data/placement/availability-zone`
