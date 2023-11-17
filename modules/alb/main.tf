@@ -36,11 +36,11 @@ resource "aws_lb_target_group" "tg" {
     enabled = true
     healthy_threshold = 2
     interval = 5
-    matcher = 100
+    matcher = 200
     path = "/"
     port = "traffic-port"
     protocol = "HTTP"
-    timeout = 5
+    timeout = 4
     unhealthy_threshold = 2
   }
 }
